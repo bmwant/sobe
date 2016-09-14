@@ -7,17 +7,21 @@ var mongoose = require('mongoose'),
 
 
 function checkSessionCode(code) {
+  console.log('Checking session', code);
   var query = Session.findOne({code: code});
-  query.then(function(result) {
-    console.log(result);
-  })
+  return query.then(function(doc) {
+    if(doc === null || !doc.valid) {
+      return false;
+    }
+    return true;
+  });
 }
 
 function createSession(invite) {
   var code = uuid.v4();
   session.code = code;
   var query = Session.findOne({invite: invite});
-  query.then(function(doc) {
+  return query.then(function(doc) {
     if(doc === null || !doc.valid) {
       return false;
     }
@@ -25,6 +29,27 @@ function createSession(invite) {
     doc.code = code;
     doc.save();
     return code;
+  });
+}
+
+function getCurrentInfo(code) {
+  var query = Session.findOne({code: code});
+  // doc always should be not null because we have checkSessionCode invocation
+  return query.then(function(doc) {
+    var queryInfo = Info.findOne({id: doc.currentQuestion});
+    return queryInfo.then(function(info) {
+      return info;
+    });
+  });
+}
+
+function getCurrentQuestion(code) {
+  var query = Session.findOne({code: code});
+  return query.then(function(currentSession) {
+    var queryQuestion = Question.findOne({id: currentSession.currentQuestion});
+    return queryQuestion.then(function(question) {
+      return question;
+    });
   });
 }
 
@@ -36,20 +61,43 @@ module.exports = {
       res.sendStatus(403);
       return;
     }
-    createSession(invite);
-
-    var data = Question.find(function(err, results) {
-      console.log(results);
+    createSession(invite).then(function(newSession) {
+      if(!newSession) {
+        res.status(400).send('Invalid invite code!');
+      } else {
+        console.log('Created session', newSession);
+        res.render('index');
+      }
     });
-
-    res.render('index');
+    
   },
   getQuestion: function(req, res) {
-    checkSessionCode(session.code);
-    console.log('You are trying to get question %s for invite %s', 1, session.invite);
-    res.json({a: 15});
+    checkSessionCode(session.code).then(function(valid) {
+      if(!valid) {
+        res.sendStatus(403);
+      } else {
+        getCurrentQuestion(session.code).then(function(question) {
+          res.json({
+            'textUa': question.textUa,
+            'textEng': question.textEng
+          });
+        }); 
+      }
+    });
   },
   getInfo: function(req, res) {
-
+    checkSessionCode(session.code).then(function(valid) {
+      if(!valid) {
+        res.sendStatus(403);
+      } else {
+        getCurrentInfo(session.code).then(function(info) {
+          res.json({
+            'textUa': info.textUa,
+            'textEng': info.textEng,
+            'photo': info.photo 
+          });
+        });      
+      }
+    });
   }
 }

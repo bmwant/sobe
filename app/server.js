@@ -8,7 +8,7 @@ var express = require('express'),
 
 
 var app = express();
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8070;
 
 app.engine('handlebars', exphbs({defaultLayout: 'index'}));
 app.set('view engine', 'handlebars');
@@ -17,6 +17,7 @@ app.disable('etag');
 
 app.get('/', routes.index);
 app.get('/question', routes.getQuestion);
+app.get('/info', routes.getInfo);
 
 var uri = 'mongodb://10.0.0.10/sobe';
 mongoose.connect(uri);
