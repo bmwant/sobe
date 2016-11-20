@@ -1,3 +1,5 @@
+@import "http://webfonts.ru/import/magnoliascript.css";
+
 #info-pic {
   width: 480px;
   height: auto;
@@ -11,13 +13,28 @@
   width: 640px;
 }
 
+.info-text-ua {
+  font-size: 2em;
+  font-family: 'Magnolia Script';
+  margin-bottom: 10px;
+}
+
+.info-text-en {
+  margin-top: 7px;
+  margin-bottom: 17px;
+  font-size: 1.3em;
+}
+
 .hero.is-primary .subtitle {
   color: rgba(255, 255, 255, 0.9);
 }
-.question-ua {
 
+.hero-foot .container {
+  margin-bottom: 7px;
+  color: white;
+  opacity: 0.5;
+  cursor: pointer;
 }
-
-.question-eng {
-
+.hero-foot .container:hover {
+  opacity: 1;
 }

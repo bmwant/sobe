@@ -83,23 +83,35 @@ function updateStep(code, answer) {
 module.exports = {
   index: function(req, res) {
     var invite = req.query.invite;
-    console.log('totalquestions', config.totalQuestions);
     if(invite === undefined) {
-      res.sendStatus(403);
+      res.status(403).send('You should have invite code to access this site!');
       return;
     }
     createSession(invite).then(function(newSession) {
       if(!newSession) {
-        res.status(400).send('Invalid invite code!');
+        res.status(400).send('Invalid or already expired invite code. \
+          You cannot play the game multiple times!');
       } else {
-        console.log('Created session', newSession);
+        console.log('Loaded session', newSession);
         res.cookie('sid', newSession);
         res.sendFile(path.join(__dirname + '/../views/page.html'));
       }
     });
   },
   showResult: function(req, res) {
-    res.sendFile(path.join(__dirname + '/../views/result.html'));
+    var code = req.cookies.sid;
+    checkSessionCode(code).then(function(valid) {
+      if(!valid) {
+        res.status(403).send('You are not able to access this page again');
+      } else {
+        var query = Session.findOne({code: code});
+        return query.then(function(currentSession) {
+          currentSession.valid = false;
+          currentSession.save();
+          res.sendFile(path.join(__dirname + '/../views/result.html'));
+        });
+      }
+    });
   },
   getQuestion: function(req, res) {
     var code = req.cookies.sid;
@@ -142,7 +154,6 @@ module.exports = {
         res.sendStatus(403);
       } else {
         updateStep(code, answer).then(function(finished) {
-          console.log('finished', finished);
           res.json({'finished': finished});
         });
       }
