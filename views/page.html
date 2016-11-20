@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://unpkg.com/jquery@3.1.0/dist/jquery.min.js"></script>
+    <script src="/node_modules/jquery.cookie/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="/node_modules/bulma/css/bulma.css">
+    <title>Sobe</title>
+  </head>
+  <body class="hero is-fullheight is-primary">
+    <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered">
+          <div class="column is-two-thirds is-vcentered">
+            <div class="question-box has-text-centered">
+              <p>This is a question</p>
+              <p>This is an English question</p>
+
+              <a class="button is-large is-success" data-answer=1>Holly true</a>
+              <a class="button is-large is-danger" data-answer=0>Not a chance</a>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="infoBox tile is-ancestor">
+              <div class="tile is-parent">
+                  <article class="tile is-child notification is-info">
+                    <p class="title">{this.props.info}</p>
+                    <p class="subtitle">With an image</p>
+                    <figure class="image is-4by3">
+                      <img src="http://placehold.it/640x480" />
+                    </figure>
+                  </article>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
+  <script src='/js/ccc.js'></script>
+</html>

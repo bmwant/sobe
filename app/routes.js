@@ -1,13 +1,12 @@
 var mongoose = require('mongoose'),
-  session = require('express-session'),
   uuid = require('node-uuid'),
   Question = require('./Question'),
   Session = require('./Session'),
-  Info = require('./Info');
+  Info = require('./Info'),
+  path = require('path');
 
 
 function checkSessionCode(code) {
-  console.log('Checking session', code);
   var query = Session.findOne({code: code});
   return query.then(function(doc) {
     if(doc === null || !doc.valid) {
@@ -19,13 +18,15 @@ function checkSessionCode(code) {
 
 function createSession(invite) {
   var code = uuid.v4();
-  session.code = code;
   var query = Session.findOne({invite: invite});
   return query.then(function(doc) {
     if(doc === null || !doc.valid) {
       return false;
     }
-
+    if(doc.code !== undefined) {
+      console.log('Returning visitor on state', doc.currentQuestion);
+      return doc.code;
+    }
     doc.code = code;
     doc.save();
     return code;
@@ -55,7 +56,6 @@ function getCurrentQuestion(code) {
 
 module.exports = {
   index: function(req, res) {
-
     var invite = req.query.invite;
     if(invite === undefined) {
       res.sendStatus(403);
@@ -66,37 +66,39 @@ module.exports = {
         res.status(400).send('Invalid invite code!');
       } else {
         console.log('Created session', newSession);
-        res.render('index');
+        res.cookie('sid', newSession);
+        res.sendFile(path.join(__dirname + '/../views/page.html'));
       }
     });
-    
   },
   getQuestion: function(req, res) {
-    checkSessionCode(session.code).then(function(valid) {
+    var code = req.cookies.sid;
+    checkSessionCode(code).then(function(valid) {
       if(!valid) {
         res.sendStatus(403);
       } else {
-        getCurrentQuestion(session.code).then(function(question) {
+        getCurrentQuestion(code).then(function(question) {
           res.json({
             'textUa': question.textUa,
             'textEng': question.textEng
           });
-        }); 
+        });
       }
     });
   },
   getInfo: function(req, res) {
-    checkSessionCode(session.code).then(function(valid) {
+    var code = req.cookies.sid;
+    checkSessionCode(code).then(function(valid) {
       if(!valid) {
         res.sendStatus(403);
       } else {
-        getCurrentInfo(session.code).then(function(info) {
+        getCurrentInfo(code).then(function(info) {
           res.json({
             'textUa': info.textUa,
             'textEng': info.textEng,
-            'photo': info.photo 
+            'photo': info.photo
           });
-        });      
+        });
       }
     });
   }
