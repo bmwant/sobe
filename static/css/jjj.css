@@ -1,0 +1,23 @@
+#info-pic {
+  width: 480px;
+  height: auto;
+}
+
+#info-pic-vertical {
+  width: 480px;
+}
+
+#info-pic-horizontal {
+  width: 640px;
+}
+
+.hero.is-primary .subtitle {
+  color: rgba(255, 255, 255, 0.9);
+}
+.question-ua {
+
+}
+
+.question-eng {
+
+}

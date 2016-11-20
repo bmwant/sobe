@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/jquery@3.1.0/dist/jquery.min.js"></script>
     <script src="/node_modules/jquery.cookie/jquery.cookie.js"></script>
     <link rel="stylesheet" href="/node_modules/bulma/css/bulma.css">
+    <link rel="stylesheet" href="/css/jjj.css">
     <title>Sobe</title>
   </head>
   <body class="hero is-fullheight is-primary">
@@ -15,8 +16,8 @@
       <div class="columns is-vcentered">
           <div class="column is-two-thirds is-vcentered">
             <div class="question-box has-text-centered">
-              <p>This is a question</p>
-              <p>This is an English question</p>
+              <p class="question-ua subtitle is-3"></p>
+              <p class="question-en subtitle is-4"></p>
 
               <a class="button is-large is-success" data-answer=1>Holly true</a>
               <a class="button is-large is-danger" data-answer=0>Not a chance</a>
@@ -24,13 +25,13 @@
           </div>
 
           <div class="column">
-            <div class="infoBox tile is-ancestor">
+            <div class="info-box tile is-ancestor">
               <div class="tile is-parent">
                   <article class="tile is-child notification is-info">
-                    <p class="title">{this.props.info}</p>
-                    <p class="subtitle">With an image</p>
-                    <figure class="image is-4by3">
-                      <img src="http://placehold.it/640x480" />
+                    <p class="info-text-ua"></p>
+                    <p class="info-text-en"></p>
+                    <figure class="image is-3by4">
+                      <img id="info-pic" src="http://placehold.it/640x480" />
                     </figure>
                   </article>
                 </div>
