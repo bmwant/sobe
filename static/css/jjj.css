@@ -1,7 +1,6 @@
 @import "http://webfonts.ru/import/magnoliascript.css";
 
 #info-pic {
-  width: 480px;
   height: auto;
 }
 
@@ -10,23 +9,29 @@
 }
 
 #info-pic-horizontal {
-  width: 640px;
+  width: 100%;
 }
 
 .info-text-ua {
   font-size: 2em;
   font-family: 'Magnolia Script';
   margin-bottom: 10px;
+  text-shadow: 1px 1px black;
 }
 
 .info-text-en {
   margin-top: 7px;
   margin-bottom: 17px;
   font-size: 1.3em;
+  font-style: italic;
 }
 
 .hero.is-primary .subtitle {
   color: rgba(255, 255, 255, 0.9);
+}
+
+.subtitle.is-5 {
+  font-style: italic;
 }
 
 .hero-foot .container {
@@ -37,4 +42,18 @@
 }
 .hero-foot .container:hover {
   opacity: 1;
+}
+
+.current-status {
+  font-size: 1.9em;
+  font-family: 'Magnolia Script';
+}
+
+.current-question {
+  color: #42afe3;
+  text-shadow: 1px 1px black;
+}
+
+.total-questions {
+  font-size: 2.2em;
 }

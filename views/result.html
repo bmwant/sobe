@@ -3,19 +3,132 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.png">
     <script src="https://unpkg.com/jquery@3.1.0/dist/jquery.min.js"></script>
     <script src="/node_modules/jquery.cookie/jquery.cookie.js"></script>
     <link rel="stylesheet" href="/node_modules/bulma/css/bulma.css">
     <link rel="stylesheet" href="/css/jjj.css">
-    <title>Sobe</title>
+    <title>Phew</title>
   </head>
   <body class="hero is-fullheight is-primary">
+    <a href="https://github.com/bmwant/sobe" target="_blank">
+      <img style="position: absolute; top: 0; right: 0; border: 0;"
+      src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+      alt="Create same app for yourself!"
+      data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+    </a>
     <div class="hero-body">
-    <div class="container">
-      There is answer
+      <div class="container " id='js-burst-container'>
+        There is answer
+      </div>
     </div>
-  </div>
+    <div class="hero-foot">
+      <div class="container has-text-centered">
+        * All names, characters, and incidents portrayed at this website are fictitious.
+      </div>
+    </div>
+
   </body>
-  <script src='/js/ccc.js'></script>
+  <script src='/js/sss.js'></script>
+  <script src="/node_modules/mo-js/build/mo.js"></script>
+  <script>
+    var _strokeWidth;
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError('Cannot call a class as a function');
+        }
+    }
+    function _possibleConstructorReturn(self, call) {
+        if (!self) {
+            throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called');
+        }
+        return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
+    }
+    function _inherits(subClass, superClass) {
+        if (typeof superClass !== 'function' && superClass !== null) {
+            throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+            constructor: {
+                value: subClass,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            }
+        });
+        if (superClass)
+            Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+    var RADIUS = 40;
+    var circle = new mojs.Shape({
+        left: 0,
+        top: 0,
+        stroke: '#FF9C00',
+        strokeWidth: (_strokeWidth = {}, _strokeWidth[2 * RADIUS] = 0, _strokeWidth),
+        fill: 'none',
+        scale: {
+            0: 1,
+            easing: 'quad.out'
+        },
+        radius: RADIUS,
+        duration: 450
+    });
+    var burst = new mojs.Burst({
+        left: 0,
+        top: 0,
+        radius: { 6: RADIUS - 7 },
+        angle: 45,
+        children: {
+            shape: 'line',
+            radius: RADIUS / 7.3,
+            scale: 1,
+            stroke: '#FD7932',
+            strokeDasharray: '100%',
+            strokeDashoffset: { '-100%': '100%' },
+            degreeShift: 'stagger(0,-5)',
+            duration: 700,
+            delay: 200,
+            easing: 'quad.out'
+        }
+    });
+    var Star = function (_mojs$CustomShape) {
+        _inherits(Star, _mojs$CustomShape);
+        function Star() {
+            _classCallCheck(this, Star);
+            return _possibleConstructorReturn(this, _mojs$CustomShape.apply(this, arguments));
+        }
+        Star.prototype.getShape = function getShape() {
+            return '<path d="M5.51132201,34.7776271 L33.703781,32.8220808 L44.4592855,6.74813038 C45.4370587,4.30369752 47.7185293,3 50,3 C52.2814707,3 54.5629413,4.30369752 55.5407145,6.74813038 L66.296219,32.8220808 L94.488678,34.7776271 C99.7034681,35.1035515 101.984939,41.7850013 97.910884,45.2072073 L75.9109883,63.1330483 L82.5924381,90.3477341 C83.407249,94.4217888 80.4739296,97.6810326 77.0517236,97.6810326 C76.0739505,97.6810326 74.9332151,97.3551083 73.955442,96.7032595 L49.8370378,81.8737002 L26.044558,96.7032595 C25.0667849,97.3551083 23.9260495,97.6810326 22.9482764,97.6810326 C19.3631082,97.6810326 16.2668266,94.4217888 17.4075619,90.3477341 L23.9260495,63.2960105 L2.08911601,45.2072073 C-1.98493875,41.7850013 0.296531918,35.1035515 5.51132201,34.7776271 Z" />';
+        };
+        return Star;
+    }(mojs.CustomShape);
+    mojs.addShape('star', Star);
+    var star = new mojs.Shape({
+        left: 0,
+        top: 0,
+        shape: 'star',
+        fill: '#FF9C00',
+        scale: { 0: 1 },
+        easing: 'elastic.out',
+        duration: 1600,
+        delay: 300,
+        radius: RADIUS / 2.25
+    });
+    var timeline = new mojs.Timeline({ speed: 1.5 });
+    timeline.add(burst, circle, star);
+    window.setInterval(function () {
+      var posx = (Math.random() * ($(document).width() - RADIUS*2)).toFixed();
+      var posy = (Math.random() * ($(document).height() - RADIUS*2)).toFixed();
+      var coords = {
+          x: posx,
+          y: posy
+      };
+      burst.tune(coords);
+      circle.tune(coords);
+      star.tune(coords);
+      timeline.replay();
+
+    }, 700);
+
+  </script>
 </html>

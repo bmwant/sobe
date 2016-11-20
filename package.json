@@ -14,6 +14,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.14.1",
     "jquery.cookie": "^1.4.1",
+    "mo-js": "^0.288.1",
     "mongoose": "^4.6.0",
     "node-uuid": "^1.4.7",
     "react": "^15.3.1",

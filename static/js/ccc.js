@@ -1,5 +1,4 @@
 $(function() {
-    console.log( "ready!" );
     $('.question-box .button').click(function() {
       var sid = $.cookie('sid');
       var answer = $(this).data('answer');
@@ -18,8 +17,10 @@ $(function() {
       $.get('/info')
         .done(function(data) {
           $('#info-pic').attr('src', '/img/'+data.photo);
+          $('#pic-link').attr('href', '/img/'+data.photo);
           $('.info-text-ua').text(data.textUa);
           $('.info-text-en').text(data.textEng);
+          $('.current-question').text('#'+data.num);
         });
     }
 

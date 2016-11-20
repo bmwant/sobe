@@ -24,9 +24,10 @@ app.get('/', routes.index);
 app.get('/question', routes.getQuestion);
 app.get('/info', routes.getInfo);
 app.get('/result', routes.showResult);
+app.get('/score', routes.getScore);
 app.post('/submit', routes.submit);
 
-var uri = 'mongodb://178.62.55.199:27017/sobe';
+var uri = 'mongodb://127.0.0.1:27017/sobe';
 mongoose.connect(uri);
 
 var server = http.createServer(app).listen(port, function() {

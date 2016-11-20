@@ -72,9 +72,7 @@ function updateStep(code, answer) {
         currentSession.currentQuestion += 1;
         finished = false;
       }
-      console.log('this->UPdate is ', finished);
       currentSession.save();
-      console.log('UPdate is ', finished);
       return finished;
     });
   });
@@ -113,6 +111,11 @@ module.exports = {
       }
     });
   },
+  getScore: function(req, res) {
+    res.json({
+      'score': 17
+    });
+  },
   getQuestion: function(req, res) {
     var code = req.cookies.sid;
     checkSessionCode(code).then(function(valid) {
@@ -137,6 +140,7 @@ module.exports = {
         getCurrentInfo(code).then(function(info) {
           console.log(info);
           res.json({
+            'num': info.id,
             'textUa': info.textUa,
             'textEng': info.textEng,
             'photo': info.photo
@@ -147,7 +151,6 @@ module.exports = {
   },
   submit: function(req, res) {
     var answer = req.body.answer === '1';
-    console.log('Answer is', answer);
     var code = req.cookies.sid;
     checkSessionCode(req.cookies.sid).then(function(valid) {
       if(!valid) {

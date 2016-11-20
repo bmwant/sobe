@@ -1,3 +1,3 @@
 module.exports = {
-  totalQuestions: 5
+  totalQuestions: 23
 };
